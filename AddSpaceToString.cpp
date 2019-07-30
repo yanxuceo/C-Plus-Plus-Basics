@@ -2,9 +2,6 @@
 #include <string>
 
 
-// has input parameters of constant referenced pointer to
-// char data type 
-// Note: Notice that function doesn't have any return values.
 
 /**
  * An example passing-value-by-reference
