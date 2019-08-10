@@ -62,4 +62,4 @@ Fib(n)
 }
 ```
 
-By this way, we are avoiding all the re-calculation of the same state again and again. Here is an [Implementaion Example](fibo_with_memorization.cpp). Note in this particular example, the recursion with memorization is not as efficient as an iterative implementation in terms of memory but it is as good as an iterative implementation in terms of time for larger values of n. And it is a lot better than simple recursion which grows exponentially with the input.
+By this way, we are avoiding all the re-calculation of the same state again and again. Here is an [Implementaion Example](fibo_recursion_with_memorization.cpp). Note in this particular example, the recursion with memorization is not as efficient as an iterative implementation in terms of memory but it is as good as an iterative implementation in terms of time for larger values of n. And it is a lot better than simple recursion which grows exponentially with the input.
