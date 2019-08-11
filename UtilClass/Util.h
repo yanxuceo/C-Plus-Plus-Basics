@@ -1,6 +1,7 @@
 #ifndef _UTIL_H_
 #define _UTIL_H_
 
+#include <vector>
 #include <string>
 #include <fstream>
 
@@ -13,6 +14,7 @@ class Util {
         static std::string convertToTime ( long int input_seconds );
         static std::string getProgressBar(std::string percent);
         static std::ifstream getStream(std::string path);
+        static std::vector<std::string> getLines(std::string path);
 
         static float ConvertToRadian(float value);
         static Percent ConvertToPercent(float probability);
@@ -49,6 +51,21 @@ std::string Util::getProgressBar(std::string percent)
 
     result += " " + percent.substr(0,5) + " /100%";
     return result;
+}
+
+
+// stored all lines into vector
+std::vector<std::string> Util::getLines(std::string path)
+{
+    std::vector<std::string> lines;
+
+    std::ifstream stream = getStream(path);
+    std::string line;
+    while(getline(stream, line)) {
+        lines.push_back(line);
+    }
+    
+    return lines;
 }
 
 // wrapper for creating streams
