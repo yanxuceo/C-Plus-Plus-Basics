@@ -1,4 +1,4 @@
 #!/bin/sh
 
-cd build/test
+cd ../build/test
 ./UtilTests
