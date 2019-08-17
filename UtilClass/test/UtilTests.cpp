@@ -31,4 +31,9 @@ TEST(UtilTests, LinuxParseTest)
 
     std::string kernel = util.Kernel(LinuxPath::kProcDirectory+LinuxPath::kVersionFilename);
     EXPECT_EQ(kernel, "4.15.0-55-generic");
+
+    std::vector<int> pids = util.Pids(LinuxPath::kProcDirectory);
+    EXPECT_TRUE(pids.size() > 300) << "there are "<<pids.size()<<" processes";
+    
+    
 }
