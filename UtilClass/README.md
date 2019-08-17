@@ -14,3 +14,11 @@ $> make
 $> cd ../scripts
 $> sh runTest.sh
 ```
+
+
+### Test result
+
+The test result will be given as below after running the _runTest_ script.
+<p align = "left">
+  <img src="media/test_result.png"  width="520" height="240">
+</p>
