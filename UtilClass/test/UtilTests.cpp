@@ -22,10 +22,13 @@ TEST(UtilTests, UtilitiesTest)
     EXPECT_EQ(result, 25);
 }
 
-TEST(UtilTests, OSParseTest)
+TEST(UtilTests, LinuxParseTest)
 {
     Util util;
     
     std::string value = util.OperatingSystem(LinuxPath::kOSPath);
     EXPECT_EQ(value, "Ubuntu 16.04.3 LTS");
+
+    std::string kernel = util.Kernel(LinuxPath::kProcDirectory+LinuxPath::kVersionFilename);
+    EXPECT_EQ(kernel, "4.15.0-55-generic");
 }
