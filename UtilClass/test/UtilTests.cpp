@@ -26,6 +26,6 @@ TEST(UtilTests, OSParseTest)
 {
     Util util;
     
-    std::string value = util.OperatingSystem("osfile.txt");
+    std::string value = util.OperatingSystem(LinuxPath::kOSPath);
     EXPECT_EQ(value, "Ubuntu 16.04.3 LTS");
 }
