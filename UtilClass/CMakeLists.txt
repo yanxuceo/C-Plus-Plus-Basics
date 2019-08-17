@@ -22,6 +22,10 @@ set(Sources
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data/input.txt
     DESTINATION ${CMAKE_BINARY_DIR}/test)
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data/osfile.txt
+    DESTINATION ${CMAKE_BINARY_DIR}/test)
+
+
 
 add_library(${This} ${Sources} ${Headers})
 add_subdirectory(test)
