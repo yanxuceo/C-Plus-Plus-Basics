@@ -13,6 +13,8 @@ typedef unsigned int Percent;
 namespace LinuxPath {
     // Paths
     const std::string kOSPath{"/etc/os-release"};
+    const std::string kProcDirectory("/proc/");
+    const std::string kVersionFilename("/version");
 
 }
 
@@ -30,7 +32,23 @@ class Util {
         static float ConvertFromPercent(Percent percent);
 
         static std::string OperatingSystem(std::string path);
+        static std::string Kernel(std::string path);
 };
+
+
+std::string Util::Kernel(std::string path) 
+{
+    std::string os, version, kernel;
+    std::string line;
+
+    std::ifstream filestream = getStream(path);
+    getline(filestream, line);
+    std::istringstream linestream(line);
+
+    linestream >> os >> version >> kernel;
+
+    return kernel;
+}
 
 
 std::string Util::OperatingSystem(std::string path)
@@ -107,6 +125,7 @@ std::vector<std::string> Util::getLines(std::string path)
     return lines;
 }
 
+
 // wrapper for creating streams
 std::ifstream Util::getStream(std::string path)
 {
@@ -117,11 +136,13 @@ std::ifstream Util::getStream(std::string path)
     return stream;
 }
 
+
  /// Converts a given value of from degree into radian
 float Util::ConvertToRadian(float value)
 {
     return(kPi * value / 180.0F);
 }
+
 
 /// Converts [0..1] float value into [0..100]% 
 Percent Util::ConvertToPercent(float probability)
@@ -133,6 +154,7 @@ Percent Util::ConvertToPercent(float probability)
     }
     return result;
 }
+
 
 /// Converts [0..100]% integer value into float [0..1]
 float Util::ConvertFromPercent(Percent percent)
