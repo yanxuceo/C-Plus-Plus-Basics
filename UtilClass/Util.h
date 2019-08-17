@@ -4,9 +4,18 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <algorithm>
+#include <sstream>
 
 const float kPi = 3.14159265358979323846F;
 typedef unsigned int Percent;
+
+namespace LinuxPath {
+    // Paths
+    const std::string kOSPath{"/etc/os-release"};
+
+}
+
 
 // helper functions
 class Util {
@@ -19,7 +28,37 @@ class Util {
         static float ConvertToRadian(float value);
         static Percent ConvertToPercent(float probability);
         static float ConvertFromPercent(Percent percent);
+
+        static std::string OperatingSystem(std::string path);
 };
+
+
+std::string Util::OperatingSystem(std::string path)
+{
+    std::string line;
+    std::string key;
+    std::string value;
+
+    std::ifstream filestream = getStream(path);
+
+    while(getline(filestream, line)) {
+        std::replace(line.begin(), line.end(), ' ', '_');
+        std::replace(line.begin(), line.end(), '=', ' ');
+        std::replace(line.begin(), line.end(), '"', ' ');
+
+        std::istringstream linestream(line);
+
+        while(linestream >> key >> value) {
+            if(key == "PRETTY_NAME") {
+                std::replace(value.begin(), value.end(), '_', ' ');
+                return value;
+            }
+        }
+    }
+
+    return value;
+}
+
 
 std::string Util::convertToTime (long int input_seconds)
 {
