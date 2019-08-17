@@ -21,3 +21,11 @@ TEST(UtilTests, UtilitiesTest)
 
     EXPECT_EQ(result, 25);
 }
+
+TEST(UtilTests, OSParseTest)
+{
+    Util util;
+    
+    std::string value = util.OperatingSystem("osfile.txt");
+    EXPECT_EQ(value, "Ubuntu 16.04.3 LTS");
+}
