@@ -6,6 +6,10 @@
 #include <fstream>
 #include <algorithm>
 #include <sstream>
+#include <iostream>
+
+#include <dirent.h>
+
 
 const float kPi = 3.14159265358979323846F;
 typedef unsigned int Percent;
@@ -16,10 +20,11 @@ namespace LinuxPath {
     const std::string kProcDirectory("/proc/");
     const std::string kVersionFilename("/version");
 
+
 }
 
 
-// helper functions
+/// helper functions
 class Util {
     public:
         static std::string convertToTime ( long int input_seconds );
@@ -33,7 +38,36 @@ class Util {
 
         static std::string OperatingSystem(std::string path);
         static std::string Kernel(std::string path);
+        static std::vector<int> Pids(std::string path);
 };
+
+
+/**
+ *  /proc/1:
+ *  A directory with information about process number 1; Each process has a directory below /proc 
+ *  with the name being its process identification number.
+ */
+std::vector<int> Util::Pids(std::string path)
+{
+    std::vector<int> pids;
+    DIR *directory = opendir(path.c_str());
+
+    struct dirent* file;
+    while((file = readdir(directory)) != nullptr)
+    {
+        if(file->d_type == DT_DIR)
+        {
+            std::string filename(file->d_name);
+            if(std::all_of(filename.begin(), filename.end(), isdigit))
+            {
+                int pid = std::stoi(filename);
+                pids.push_back(pid);
+            }
+        }
+    }
+    closedir(directory);
+    return pids;
+}
 
 
 std::string Util::Kernel(std::string path) 
@@ -88,9 +122,12 @@ std::string Util::convertToTime (long int input_seconds)
     return result;
 }
 
-// constructing string for given percentage
-// 50 bars is uniformly streched 0 - 100 %
-// meaning: every 2% is one bar(|)
+
+/**
+ * Constructing string for given percentage, 50 bars is uniformly streched 0 - 100 %
+ * meaning: every 2% is one bar(|)
+ * 
+ */
 std::string Util::getProgressBar(std::string percent)
 {
     std::string result = "0% ";
@@ -111,7 +148,7 @@ std::string Util::getProgressBar(std::string percent)
 }
 
 
-// stored all lines into vector
+/// stored all lines into vector
 std::vector<std::string> Util::getLines(std::string path)
 {
     std::vector<std::string> lines;
@@ -126,7 +163,7 @@ std::vector<std::string> Util::getLines(std::string path)
 }
 
 
-// wrapper for creating streams
+/// wrapper for creating streams
 std::ifstream Util::getStream(std::string path)
 {
     std::ifstream stream(path);
